@@ -1,0 +1,80 @@
+Actividades Lavanderia
+
+1. Gestión de Clientes
+crear_cliente(nombre, telefono, direccion)
+
+buscar_cliente_por_nombre(nombre)
+
+buscar_cliente_por_telefono(telefono)
+
+actualizar_cliente(id_cliente, datos_actualizados)
+
+eliminar_cliente(id_cliente)
+
+2. Gestión de Usuarios (Empleados/Admins)
+registrar_usuario(nombre, email, password, rol)
+
+iniciar_sesion(email, password)
+
+cerrar_sesion(id_usuario)
+
+actualizar_usuario(id_usuario, datos_actualizados)
+
+cambiar_estado_usuario(id_usuario, activo)
+
+ver_logs_usuario(id_usuario)
+
+3. Gestión de Órdenes
+crear_orden(id_cliente, id_usuario, fecha_entrega_estimada)
+
+agregar_prenda_a_orden(id_orden, tipo_prenda, descripcion, observaciones)
+
+asignar_servicio_a_prenda(id_prenda, id_servicio, cantidad)
+
+actualizar_estado_orden(id_orden, nuevo_estado)
+
+obtener_detalle_orden(id_orden)****
+
+listar_ordenes_por_estado(estado)
+
+orden_lista_notificacion(id_orden)****
+
+calcular_total_orden(id_orden)****
+
+finalizar_orden(id_orden)
+
+4. Gestión de Servicios
+crear_servicio(nombre, descripcion, precio_unitario)
+
+actualizar_servicio(id_servicio, datos_actualizados)
+
+eliminar_servicio(id_servicio)
+
+listar_servicios()
+
+5. Pagos
+registrar_pago(id_orden, monto, metodo_pago)
+
+ver_pagos_por_fecha(fecha_inicio, fecha_fin)
+
+generar_reporte_ingresos(periodo)
+
+aplicar_descuento(id_orden, porcentaje)
+
+6. Inventario y Control de Prendas
+ver_prendas_por_orden(id_orden)
+
+registrar_observaciones_prenda(id_prenda, observaciones)
+
+listar_historial_prendas_danadas_o_extraviadas()
+
+imprimir_ticket_orden(id_orden)
+
+7. Reportes y Estadísticas
+reporte_ordenes_por_fecha(fecha_inicio, fecha_fin)
+
+estadisticas_servicios_mas_usados()
+
+exportar_reporte_excel(tipo_reporte)
+
+exportar_reporte_pdf(tipo_reporte)
