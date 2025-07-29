@@ -13,8 +13,6 @@ class Order(db.Model):
     state = db.Column(db.String(20), default="recibido")#recibido, en proceso, listo, entregado
     total = db.Column(db.Integer, nullable=False)
     pagado = db.Column(db.Boolean, default=False)
-    #Relaciones inversas pendientes :3
-    garments = db.relationship("Garment", backref="order", lazy=True)
     #Relacion de pago
     
     def to_dict(self, garments:bool= False):

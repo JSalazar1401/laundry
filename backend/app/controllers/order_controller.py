@@ -3,6 +3,8 @@ from app.models.order import Order
 from app.models.garment import Garment
 from app.models.order_detail import OrderDetail
 from app.models.service import Service
+from app.models.client import Client
+from app.models.user import User
 
 def create_order(client_id, user_id, estimated_date, total_price):
     order = Order(client_id=client_id, user_id=user_id, estimated_delivery_date= estimated_date, total=total_price)
@@ -79,4 +81,46 @@ def list_orders_by_status(status):
     } for order in orders]
     return data
 
+def create_order_table(orders):
+    data = []
+    for order in orders:
+        client = Client.query.get(order.client_id)
+        user = User.query.get(order.user_id)
+        order_table = {
+            "id":order.id,
+            "client_name":client.name,
+            "user_name":user.name,
+            "state":order.state,
+            "created_at":order.created_at,
+            "total":order.total,
+        }
+        data.append(order_table)
+    return data
 
+def get_orders_dashboard(pagination):
+    orders = Order.query.filter().order_by(Order.created_at.desc()).limit(10)
+    if pagination > 1:
+        orders = orders.offset(pagination*10)
+    return create_order_table(orders.all())
+
+def get_pending_orders_dashboard(pagination):
+    orders_received = Order.query.filter_by(state="recibido").order_by(Order.created_at.desc()).limit(10)
+    orders_process = Order.query.filter_by(state="en proceso").order_by(Order.created_at.desc()).limit(10)
+    if pagination > 1:
+        orders_received = orders_received.offset(pagination*10)
+        orders_process = orders_process.offset(pagination*10)
+    orders = orders_process.all() + orders_received.all()
+    return create_order_table(orders)
+
+def get_counting():
+    num_garments = Garment.query.filter().count()
+    num_services = Service.query.filter().count()
+    num_clients = Client.query.filter().count()
+    num_users = User.query.filter().count()
+    data = {
+        "quantity_garments":num_garments,
+        "quantity_services":num_services,
+        "quantity_users":num_users,
+        "quantity_clients":num_clients
+    }
+    return data

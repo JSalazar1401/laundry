@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {
   createBrowserRouter,
@@ -7,6 +5,8 @@ import {
 } from "react-router";
 import { CreateOrder } from './orders/CreateOrder';
 import { Dashboard } from './Dashboard';
+import { List } from './garments/List';
+import { Create } from './garments/Create';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +16,14 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     Component: Dashboard,
+  },
+  {
+    path: "/garments",
+    Component: List,
+  },
+  {
+    path: "/garment/create",
+    Component: Create,
   },
 ]);
 

@@ -7,14 +7,11 @@ class Garment(db.Model):
     description = db.Column(db.String(200))
     observations = db.Column(db.String(200))
     
-    def to_dict(self,order_detail:bool=False):
-        """ garment = {
+    def to_dict(self):
+        garment = {
             'id':self.id,
             'type':self.type,
             'description':self.description,
             'observations':self.observations,
         }
-        if order_detail:
-            garment['order_detail'] = self.order_detail
-        return garment """
-        return self.__dict__
+        return garment

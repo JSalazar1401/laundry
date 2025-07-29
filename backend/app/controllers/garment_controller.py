@@ -1,8 +1,8 @@
 from app import db
 from app.models.garment import Garment
 
-def create_garment(name, description, price):
-    new_garment = Garment(name=name, description=description, price=price)
+def create_garment(name, description):
+    new_garment = Garment(type=name, description=description)
     db.session.add(new_garment)
     db.session.commit()
     return new_garment
@@ -32,7 +32,8 @@ def get_garment(garment_id):
     return garment
 
 def get_garments():
-    garments = Garment.query.filter(Garment).all()
+    garments = Garment.query.filter().all()
     if not garments:
         return None
-    return garments
+    data = [garment.to_dict() for garment in garments]
+    return data

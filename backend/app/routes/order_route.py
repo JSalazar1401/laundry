@@ -1,5 +1,5 @@
 from flask import jsonify, request, Blueprint
-from app.controllers.order_controller import create_order, add_garment, create_order_detail, add_service, get_order_detail
+from app.controllers.order_controller import create_order, add_garment, create_order_detail, add_service, get_order_detail, get_counting, get_orders_dashboard, get_pending_orders_dashboard
 import datetime
 order_bp = Blueprint("order_bp", __name__, url_prefix="/orders")
 
@@ -35,3 +35,40 @@ def get_order_detail_endpoint(order_id):
     except Exception as e:
         return jsonify({"msg":"Ocurrio un error", "error":e}), 500
 
+@order_bp.route("/get-orders-dashboard", methods=["GET"])
+def get_orders_dashboard_endpoint():
+    pagination = int(request.args.get("pagination"))
+    try:
+        data = get_orders_dashboard(pagination)
+        return jsonify(data), 200
+    except Exception as e:
+        print("Error al obtener las ordenes para el dashboard")
+        print(e)
+        return jsonify({
+            "msg":"Ocurrio un error imprevisto"
+        })
+
+@order_bp.route("/get-pending-orders-dashboard", methods=["GET"])
+def get_pending_orders_dashboard_endpoint():
+    pagination = int(request.args.get("pagination"))
+    try:
+        data = get_pending_orders_dashboard(pagination)
+        return jsonify(data), 200
+    except Exception as e:
+        print("Error al obtener las ordenes pendientes para el dashboard")
+        print(e)
+        return jsonify({
+            "msg":"Ocurrio un error imprevisto"
+        })
+        
+@order_bp.route("/get-counting", methods=["GET"])
+def get_counting_endpoint():
+    try:
+        data = get_counting()
+        return jsonify(data), 200
+    except Exception as e:
+        print("Error al obtener el conteo para el dashboard")
+        print(e)
+        return jsonify({
+            "msg":"Ocurrio un error imprevisto"
+        })
