@@ -32,7 +32,7 @@ def get_service(service_id):
     return service
 
 def get_services():
-    services = Service.query.filter(Service).all()
+    services = Service.query.filter().all()
     if not services:
         return None
-    return services
+    return [service.to_dict() for service in services]

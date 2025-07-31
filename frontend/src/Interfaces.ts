@@ -4,7 +4,15 @@ interface IService{
     unitPrice:number;
 }
 
+interface IServiceBackend{
+    id?:number;
+    name:string;
+    description:string;
+    price:number;
+}
+
 interface IGarments{
+    id?:number;
     type:string;
     description:string;
     observations:string;
@@ -45,5 +53,6 @@ export type {
     IGarments,
     IService,
     IOrderTable,
-    Counting
+    Counting,
+    IServiceBackend
 }
