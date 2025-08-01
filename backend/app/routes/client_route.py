@@ -1,5 +1,5 @@
 from flask import jsonify, request, Blueprint
-from app.controllers.client_controller import create_client, search_client_by_name, search_client_by_phone, update_client, delete_client
+from app.controllers.client_controller import create_client, search_client_by_name, search_client_by_phone, search_clients, update_client, delete_client
 
 client_bp = Blueprint("client_bp", __name__, url_prefix="/clients")
 
@@ -18,26 +18,23 @@ def create():
         "msg":"Cliente creado con exito :3",
         "client":client.to_dict()
     }),200
-    
-@client_bp.route("/search/name", methods=["GET"])
-def search_by_name():
-    name = request.args.get("name")
-    clients = search_client_by_name(name)
-    #Fea pero entendible
-    """ data = []
-    for client in clients:
-        data.append(client.to_dict()) """
-    #Fancy pero diferente de ejecutar
-    data = [client.to_dict() for client in clients]
-    return jsonify(data), 200
 
-@client_bp.route("/search/phone", methods=["GET"])
-def search_by_phone():
-    phone = request.args.get("phone")
-    client = search_client_by_phone(phone)
-    if not client:
-        return jsonify({"error":"Cliente no encontrado :/"}), 400
-    return jsonify(client.to_dict()), 200
+@client_bp.route("/search", methods=["GET"])
+def search():
+    filter = request.args.get("filter")
+    parameter = request.args.get("parameter")
+    clients = []
+    if filter and parameter:
+        if filter == "name":
+            clients = search_client_by_name(parameter)
+        elif filter == "phone":
+            clients = search_client_by_phone(parameter)
+        else:
+            return jsonify({"msg":"Filtro desconocido"}),400
+    else:
+        clients = search_clients()
+    return [client.to_dict() for client in clients]
+
 
 @client_bp.route("/update/<int:client_id>", methods=["PUT"])
 def update(client_id):
